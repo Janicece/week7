@@ -18,6 +18,16 @@ const Developer = require('./models/developer');
 
 let url='mongodb://localhost:27017/week7';
 
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true },function(err) {
+    if (err) {
+      console.log("MongoDB connection error ", err);
+    } else {
+      console.log("Connected successfully to server");
+     
+    }
+
+  })
+
 mongoose.connect(url, function (err) {
     if (err) {
         console.log('Error in Mongoose connection');
@@ -132,15 +142,20 @@ app.post('/updatetaskdata', function (req, res) {
     res.redirect('/gettask');
 });
 
-let sortBy={name:-1}
-Task.where("name").limit(5).sort(sortBy).exec(function (err, docs) {
-    console.log(docs);
-});
+// let sortBy={name:-1}
+// Task.where("name").limit(3).sort(sortBy).exec(function (err, docs) {
+//     console.log(docs);
+// });
 
+app.get('/odertask',function(req,res){
+    let sortBy={name:-1}
+    Task.where("name").limit(3).sort(sortBy).exec(function (err, docs) {
+       // console.log(docs);
+       res.send(docs);
+       res.redirect('/gettask');
 
-
-
-
+    });
+})
 
 app.listen(8080);
 
