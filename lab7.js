@@ -149,7 +149,7 @@ app.post('/updatetaskdata', function (req, res) {
 
 app.get('/odertask',function(req,res){
     let sortBy={name:-1}
-    Task.where("name").limit(3).sort(sortBy).exec(function (err, docs) {
+    Task.where("name").limit(3).sort(sortBy).find({taskstatus:'Complete'}).exec(function (err, docs) {
        // console.log(docs);
        res.send(docs);
        res.redirect('/gettask');
